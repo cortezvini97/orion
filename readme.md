@@ -2,7 +2,7 @@
 
 Orion é uma biblioteca PHP leve e eficiente para renderização de templates e visualizações, projetada para ser flexível e fácil de usar em seus projetos.
 
-![Orion Template Engine](./orion.svg?text=Orion+Template+Engine)
+![Orion Template Engine](img/orion.svg?text=Orion+Template+Engine)
 
 ## Índice
 
