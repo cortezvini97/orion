@@ -109,12 +109,17 @@ final class OrionCompiler
     }
 
     protected function compileEchos($content) {
-        $content = preg_replace('/{{\s*(?!.*!!)(.+?)\s*}}/', '<?php echo escape($1); ?>', $content);
+        $content = preg_replace('/{{\s*(?!fn\s)(?!.*!!)(.+?)\s*}}/', '<?php echo escape($1); ?>', $content);
         return $content;
     }
 
     protected function compileEchosHtml($content) {
         $content = preg_replace('/\{\!\!\s*(.+?)\s*\!\!\}/', '<?php echo $1; ?>', $content);
+        return $content;
+    }
+
+    protected function compileFunctionsPHP($content) {
+        $content = preg_replace('/\{\{fn\s*(.+?)\s*fn\}\}/', '<?php $1; ?>', $content);
         return $content;
     }
 
@@ -531,6 +536,8 @@ final class OrionCompiler
 
         $finalContent = $this->compileEchosHtml($finalContent);
         $this->log("Content after compiling echos HTML:\n" . htmlspecialchars($finalContent));
+        $finalContent = $this->compileFunctionsPHP($finalContent);
+        $this->log("Content after compiling php functions:\n" . htmlspecialchars($finalContent));
 
         return $finalContent;
     }

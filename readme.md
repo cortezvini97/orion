@@ -20,7 +20,7 @@ Orion é uma biblioteca PHP leve e eficiente para renderização de templates e 
 ## Instalação
 
 ```bash
-composer require orion/orion
+composer require cortezvini97/orion
 ```
 
 ## Configuração
