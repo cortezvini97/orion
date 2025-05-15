@@ -54,7 +54,7 @@ final class OrionEngine
         }
     }
 
-    protected function loadCustoms()
+    public function loadCustoms()
     {
         require_once __DIR__."/../headers/headers.php";
 
@@ -90,7 +90,7 @@ final class OrionEngine
 
         $this->log("Loading custom functions and directives");
 
-        $this->loadCustoms();
+        
 
         //getContent
         // 1. Load page content

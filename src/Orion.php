@@ -22,8 +22,14 @@ class Orion {
         }
     }
 
+
+    protected function loadCustoms(){
+        $this->engine->loadCustoms();
+    }
+
     
     public function render(string $view, array $data = []){
+        $this->loadCustoms();
         
         $result = $this->engine->renderView($view, $data);
         extract($data);
