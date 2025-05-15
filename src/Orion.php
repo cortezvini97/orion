@@ -4,7 +4,7 @@ namespace Orion;
 
 use Orion\Internal\Engine\OrionEngine;
 
-final class Orion {
+class Orion {
     private OrionEngine $engine;
     private bool $debug = false;
     private static $directives = [];
