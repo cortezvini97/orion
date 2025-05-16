@@ -14,5 +14,13 @@
             "email": "cortezvinicius881@gmail.com"
         }
     ],
+    "archive": {
+        "exclude": [
+            "/tests/",
+            "*.md",
+            "composer.lock",
+            "/img/*"
+        ]
+    },
     "require": {}
 }
