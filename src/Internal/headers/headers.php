@@ -1,8 +1,8 @@
 <?php
 
-function e($a){
+function escape($a){
     if($a == null){
-        throw new Exception("Prameter null");
+        throw new Exception("Prameter null in escape");
     }
     return htmlspecialchars($a);
 }
