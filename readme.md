@@ -32,8 +32,8 @@ use Orion\Orion;
 
 // Configuração básica
 $orion = new Orion([
-    'template_path' => 'caminho/para/templates',
-    'cache_path' => 'caminho/para/cache',
+    'viewsPath' => 'caminho/para/templates',
+    'functionsPath' => 'caminho/para/cache',
     // outras configurações
 ]);
 ```
@@ -42,10 +42,10 @@ $orion = new Orion([
 
 | Opção | Tipo | Descrição | Padrão |
 |-------|------|-----------|--------|
-| template_path | string | Caminho para o diretório de templates | ./templates |
-| cache_path | string | Caminho para armazenar arquivos compilados | ./cache |
-| cache_enabled | bool | Ativa ou desativa o cache de templates | true |
-| file_extension | string | Extensão padrão dos arquivos de template | .orion.php |
+| template_path | string | Caminho para o diretório de templates | ./views |
+| functionsPath | string | Caminho para armazenar arquivos de funções | ./functions |
+| compiledPath | string | Caminho para armazenar arquivos compilados | ./compiled |
+| debug | bool | ativar mode depuração. | false |
 
 ## Uso Básico
 
@@ -66,15 +66,15 @@ Um template básico poderia ser assim:
 <!-- home.orion.php -->
 <html>
 <head>
-    <title><?= $title ?></title>
+    <title>{{$title}}></title>
 </head>
 <body>
-    <h1>Bem-vindo, <?= $user->name ?>!</h1>
+    <h1>Bem-vindo,  {{$user->name }}!</h1>
     
     <ul>
-    <?php foreach($items as $item): ?>
-        <li><?= $item->name ?></li>
-    <?php endforeach; ?>
+    @foreach($items as $item)
+        <li>{{$item->getName()}}</li>
+    @endforeach
     </ul>
 </body>
 </html>
@@ -260,4 +260,4 @@ Orion Template Engine é software livre, licenciado sob a licença MIT. Veja o a
 
 ---
 
-Desenvolvido com ❤️ pela equipe Orion
+Desenvolvido com ❤️ por Vinicius Cortez
