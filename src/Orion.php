@@ -22,7 +22,7 @@ class Orion {
         }
     }
 
-    public function loadCustoms(){
+    protected function loadCustoms(){
         $this->engine->loadCustoms();
     }
     
