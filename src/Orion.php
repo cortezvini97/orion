@@ -22,9 +22,12 @@ class Orion {
         }
     }
 
+    public function loadCustoms(){
+        $this->engine->loadCustoms();
+    }
     
     public function render(string $view, array $data = []){
-        
+        $this->loadCustoms();
         $result = $this->engine->renderView($view, $data);
         extract($data);
         //render
@@ -35,13 +38,11 @@ class Orion {
 
             $this->log("Final rendered content:\n" . htmlspecialchars($renderedContent));
 
-            return $renderedContent;
+            echo $renderedContent;
         }else{
 
             $file_dir = $this->engine->genTemplateFile($result);
-            ob_start();
             include ($file_dir);
-            return ob_get_clean();
         }
     }
 
