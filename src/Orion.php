@@ -35,11 +35,13 @@ class Orion {
 
             $this->log("Final rendered content:\n" . htmlspecialchars($renderedContent));
 
-            echo $renderedContent;
+            return $renderedContent;
         }else{
 
             $file_dir = $this->engine->genTemplateFile($result);
+            ob_start();
             include ($file_dir);
+            return ob_get_clean();
         }
     }
 
