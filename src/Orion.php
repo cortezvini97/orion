@@ -40,9 +40,10 @@ class Orion {
 
             echo $renderedContent;
         }else{
-
+            ob_start();
             $file_dir = $this->engine->genTemplateFile($result);
             include ($file_dir);
+            return ob_get_clean();
         }
     }
 
