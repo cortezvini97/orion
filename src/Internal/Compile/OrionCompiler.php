@@ -109,7 +109,7 @@ final class OrionCompiler
     }
 
     protected function compileEchos($content) {
-        $content = preg_replace('/{{\s*(?!fn\s)(?!.*!!)(.+?)\s*}}/', '<?php echo escape($1); ?>', $content);
+        $content = preg_replace('/{{\s*(?!fn\s)(?!.*!!)(.+?)\s*}}/', '<?php echo e($1); ?>', $content);
         return $content;
     }
 

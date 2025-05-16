@@ -1,5 +1,5 @@
 <?php
 
-function escape($a){
+function e($a){
     return htmlspecialchars($a);
 }
