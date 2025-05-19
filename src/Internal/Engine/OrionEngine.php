@@ -86,13 +86,6 @@ final class OrionEngine
             
             try {
                 $directives = require($file_path);
-                
-                if (is_array($directives)) {
-                    $this->custom_directives = array_merge($this->custom_directives, $directives);
-                    $this->log("Loaded " . count($this->custom_directives) . " custom directives");
-                } else {
-                    $this->log("Directives file did not return an array");
-                }
             } catch (Exception $e) {
                 $this->log("Error loading directives: " . $e->getMessage());
             }
