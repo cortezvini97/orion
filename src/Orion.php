@@ -7,11 +7,15 @@ use Orion\Internal\Engine\OrionEngine;
 class Orion {
     private OrionEngine $engine;
     private bool $debug = false;
+    private bool $deleteFile = false;
     private static $directives = [];
 
 
     public function __construct($configs = [])
     {
+        if(isset($configs["deleteFile"])){
+            $this->deleteFile = $configs["deleteFile"];
+        }
         $this->engine = new OrionEngine($configs);
     }
 
@@ -20,6 +24,10 @@ class Orion {
         if ($this->debug) {
             echo "<pre>[DEBUG] $message</pre>";
         }
+    }
+
+    public function setCustomDirectives(string $file){
+        $this->engine->setCustomDirectives($file);
     }
 
     protected function loadCustoms(){
@@ -37,13 +45,17 @@ class Orion {
             $renderedContent = ob_get_clean();
 
             $this->log("Final rendered content:\n" . htmlspecialchars($renderedContent));
-
-            echo $renderedContent;
+            
+            return $renderedContent;
         }else{
             ob_start();
             $file_dir = $this->engine->genTemplateFile($result);
             include ($file_dir);
-            return ob_get_clean();
+            $renderedContent =  ob_get_clean();
+            if($this->deleteFile){
+                unlink($file_dir);
+            }
+            return $renderedContent;
         }
     }
 

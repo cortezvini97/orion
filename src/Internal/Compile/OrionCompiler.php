@@ -17,13 +17,17 @@ final class OrionCompiler
     protected bool $debug;
     protected array $directives = [];
 
-    public function __construct(bool $debug, string $viewsPath, string $directivePath){
+    public function __construct(bool $debug, string $viewsPath, string $directivePath, $custom_directives = []){
 
         $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
         $caller = $bt[1]['class'] ?? null;
 
         if ($caller !== 'Orion\Orion' && $caller !== 'Orion\Internal\Engine\OrionEngine') {
             throw new \RuntimeException('OrionCompiler é para uso interno apenas.');
+        }
+
+        if(count($custom_directives) > 0){
+            $this->directives = array_merge($this->directives, $custom_directives);
         }
 
         $this->debug = $debug;
@@ -133,7 +137,7 @@ final class OrionCompiler
                 $directives = require($directiveFile);
                 
                 if (is_array($directives)) {
-                    $this->directives = $directives;
+                    $this->directives = array_merge($this->directives, $directives);
                     $this->log("Loaded " . count($this->directives) . " custom directives");
                 } else {
                     $this->log("Directives file did not return an array");

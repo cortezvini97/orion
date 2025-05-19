@@ -15,6 +15,7 @@ final class OrionEngine
     protected $directivesPath = './directives/';
     protected $compiledPath =  './compiled/';
     protected bool $debug = false;
+    protected $custom_directives = [];
 
     public function __construct($configs = [])
     {
@@ -78,9 +79,32 @@ final class OrionEngine
     }
 
 
+    public function setCustomDirectives(string $file_path){
+        
+        if (file_exists($file_path)) {
+            $this->log("Loading directives from: $file_path");
+            
+            try {
+                $directives = require($file_path);
+                
+                if (is_array($directives)) {
+                    $this->custom_directives = array_merge($this->custom_directives, $directives);
+                    $this->log("Loaded " . count($this->custom_directives) . " custom directives");
+                } else {
+                    $this->log("Directives file did not return an array");
+                }
+            } catch (Exception $e) {
+                $this->log("Error loading directives: " . $e->getMessage());
+            }
+        } else {
+            $this->log("Directives file not found: $directiveFile");
+        }
+    }
+
+
     public function renderView(string $view, array $data = []){
         $this->log("Starting render for view: $view");
-        $file = $this->viewsPath . str_replace('.', '/', $view) . '.orion.php';
+        $file = $this->viewsPath . "/" . str_replace('.', '/', $view) . '.orion.php';
 
         $this->log("Looking for view file: $file");
 
@@ -96,7 +120,7 @@ final class OrionEngine
         $this->log("Original content:\n" . htmlspecialchars($content));
         //Compile
         $compiler = new OrionCompiler($this->debug, $this->viewsPath, $this->directivesPath);
-        $result = $compiler->compile($content, $data);
+        $result = $compiler->compile($content, $data, $this->custom_directives);
         return $result;
     }
 }
