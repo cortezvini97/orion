@@ -9,6 +9,7 @@ class Orion {
     private bool $debug = false;
     private bool $deleteFile = false;
     private static $directives = [];
+    private $app = null;
 
 
     public function __construct($configs = [])
@@ -33,11 +34,18 @@ class Orion {
     protected function loadCustoms(){
         $this->engine->loadCustoms();
     }
+
+    public function setApp(){
+        $this->app = $this;
+    }
     
     public function render(string $view, array $data = []){
         $this->loadCustoms();
         $result = $this->engine->renderView($view, $data);
         extract($data);
+        if($this->app != null){
+            $app = $this->app;
+        }
         //render
         if($this->debug){
             ob_start();
