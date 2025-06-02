@@ -88,7 +88,7 @@ final class OrionCompiler
      * Remove comentários do template
      * Suporta os formatos:
      * {{ # comentário # }}
-     * {!# comentário #!}
+     * {!!# comentário #!!}
      * {{#fn comentário fn#}}
      */
     protected function removeComments($content)
@@ -98,8 +98,8 @@ final class OrionCompiler
         // Remove comentários do tipo {{ # comentário # }}
         $content = preg_replace('/\{\{\s*#.*?#\s*\}\}/s', '', $content);
         
-        // Remove comentários do tipo {!# comentário #!}
-        $content = preg_replace('/\{\!\s*#.*?#\s*\!\}/s', '', $content);
+        // Remove comentários do tipo {!!# comentário #!!}
+        $content = preg_replace('/\{\!\!\s*#.*?#\s*\!\!\}/s', '', $content);
         
         // Remove comentários do tipo {{#fn comentário fn#}}
         $content = preg_replace('/\{\{\s*#fn.*?fn#\s*\}\}/s', '', $content);
