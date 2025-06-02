@@ -45,6 +45,7 @@ $orion = new Orion([
 | template_path | string | Caminho para o diretório de templates | ./views |
 | functionsPath | string | Caminho para armazenar arquivos de funções | ./functions |
 | compiledPath | string | Caminho para armazenar arquivos compilados | ./compiled |
+| deleteFile | bool | deletar arquivo após compilação. | false |
 | debug | bool | ativar mode depuração. | false |
 
 ## Uso Básico

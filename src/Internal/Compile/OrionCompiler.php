@@ -84,6 +84,31 @@ final class OrionCompiler
         }, $layoutContent);
     }
 
+    /**
+     * Remove comentários do template
+     * Suporta os formatos:
+     * {{ # comentário # }}
+     * {!# comentário #!}
+     * {{#fn comentário fn#}}
+     */
+    protected function removeComments($content)
+    {
+        $this->log("Processing comments...");
+        
+        // Remove comentários do tipo {{ # comentário # }}
+        $content = preg_replace('/\{\{\s*#.*?#\s*\}\}/s', '', $content);
+        
+        // Remove comentários do tipo {!# comentário #!}
+        $content = preg_replace('/\{\!\s*#.*?#\s*\!\}/s', '', $content);
+        
+        // Remove comentários do tipo {{#fn comentário fn#}}
+        $content = preg_replace('/\{\{\s*#fn.*?fn#\s*\}\}/s', '', $content);
+        
+        $this->log("Comments removed");
+        
+        return $content;
+    }
+
     protected function compileStatements($content){
 
         $paterns = [
@@ -469,6 +494,9 @@ final class OrionCompiler
         // Load the include content
         $includeContent = file_get_contents($file);
 
+        // Remove comments from include content
+        $includeContent = $this->removeComments($includeContent);
+
         // Process nested includes
         $includeContent = $this->processIncludes($includeContent, $data);
 
@@ -497,6 +525,11 @@ final class OrionCompiler
 
     public function compile(string $content, array $data){
         $this->content = $content;
+        
+        // Remove comentários PRIMEIRO, antes de qualquer processamento
+        $this->content = $this->removeComments($this->content);
+        $this->log("Content after removing comments:\n" . htmlspecialchars($this->content));
+        
         $this->checkExtends();
         $this->log("Extends: " . ($this->extends ?? 'None'));
         $this->extractSections();
@@ -509,6 +542,10 @@ final class OrionCompiler
             }
 
             $layoutContent = file_get_contents($layoutFile);
+            
+            // Remove comentários do layout também
+            $layoutContent = $this->removeComments($layoutContent);
+            
             $this->log("Layout content:\n" . htmlspecialchars($layoutContent));
 
             // 5. Replace yields with sections
