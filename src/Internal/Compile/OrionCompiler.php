@@ -120,7 +120,7 @@ final class OrionCompiler
             '/@endforeach/' => '<?php endforeach; ?>',
             '/@php/' => '<?php ',
             '/@endphp/' => ' ?>',
-            '/@csrf/' => '<?php echo csrfDirective(); ?>',
+            '/@csrf/' => '<?php echo csrf_field(); ?>',
             '/@for\s*\((.+)\)/' => '<?php for ($1): ?>',
             '/@endfor/' => '<?php endfor; ?>',
             '/@break/' => '<?php break; ?>',
